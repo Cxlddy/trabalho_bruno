@@ -23,12 +23,12 @@ def  menu_adm():
         clear()
         livro = input("Digite o nome do livro: ")
         livros.adicionar_livro(livro)
-        input("Digite enter para continuar...")
+        input("Pressione [Enter] para continuar...")
     elif escolha == '2':
         clear()
         livro = input("Digite o nome do livro: ")
         livros.adicionar_livro()
-        input("Digite enter para continuar...")
+        input("Pressione [Enter] para continuar...")
     elif escolha == '3':
         clear()
         print(dados['livros'])
@@ -44,3 +44,44 @@ def menu_user():
     print('[2] - Pegar empréstimos')
     print('[3] - Ver empréstimos')
     print('[4] - Devolver livro')
+    print('[0] - Sair')
+    escolha = input(("\nEscolha: "))
+
+    if escolha == '1':
+        clear()
+        print(dados['livros'])
+    elif escolha == '2':
+        clear()
+        print("Digite o nome do livro que deseja emprestar: ")
+        livro = input()
+        users.emprestar(usuario_atual, livro)
+        input("Pressione [Enter] para continuar...")
+    elif escolha == '3':
+        clear()
+        print('Digite seu nome de usuário:')
+        u = input()
+
+        for user in dados['usuarios']:
+            if user['nome'] == u:
+                print(user['Emprestimos'])
+        input("Pressione [Enter] para continuar...")
+    elif escolha == '4':
+        users.devolver(usuario_atual, livro)
+        input("Pressione [Enter] para continuar...")
+    elif escolha == '0':
+        clear()
+        usuario_atual = None
+
+
+
+while True:
+    print("===== MENU INICIAL =====")
+    print('\n[1] - Fazer Login')
+    print('\n[2] - Criar Conta')
+    e = input("\nEscolha: ")
+
+    if e == '1':
+        print('=== Login ===')
+        nome_usr = input("Digite seu nome de usuário: ")
+        senha = input("Digite sua senha: ")
+        users.logar(nome_usr, senha)

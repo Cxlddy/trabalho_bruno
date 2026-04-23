@@ -1,4 +1,6 @@
 from database.database import dados
+from datetime import date
+date = date.today()
 
 class Usuarios():
 
@@ -29,10 +31,16 @@ class Usuarios():
     
     def emprestar(self, usuario, livro):
 
-        if not livro['disponivel']:
+        if not livro['disponivel'] == True:
             print('Livro já emprestado!')
             return False
 
         livro['disponivel'] = False
-        usuario['Emprestimos'].append(livro)
+        usuario['Emprestimos'].append((date, livro))
         return True
+
+    def devolver(self, usuario, livro):
+        if not livro['disponivel'] == False:
+            print("Este livro não foi emprestado")
+        livro['disponivel'] = True
+        usuario['Emprestimo'].remove((date, livro))
