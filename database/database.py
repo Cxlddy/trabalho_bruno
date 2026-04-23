@@ -1,0 +1,4 @@
+dados = {
+    'livros': [],
+    'usuarios': [],
+}
