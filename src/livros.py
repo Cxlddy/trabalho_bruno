@@ -3,7 +3,7 @@ from database.database import dados
 class Livros():
 
     def __init__(self):
-        dados['livros'] = self.livros
+       self.livros = dados['livros']
     
     def adicionar_livro(self, livro):
 
