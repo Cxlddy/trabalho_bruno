@@ -1,5 +1,5 @@
 from database.database import dados
-from datetime import date
+from datetime import date, datetime, timedelta
 date = date.today()
 
 class Usuarios():
@@ -29,18 +29,43 @@ class Usuarios():
         print("Nome ou senha incorreto(s)")
         return None
     
-    def emprestar(self, usuario, livro):
+    def emprestar(self, usuario, data, livro):
 
-        if not livro['disponivel'] == True:
+        if not livro['disponivel']:
             print('Livro já emprestado!')
             return False
 
+        data_obj = datetime.strptime(data, "%Y-%m-%d")
+        prazo = data_obj + timedelta(days=7)
+
         livro['disponivel'] = False
-        usuario['Emprestimos'].append((date, livro))
+
+        usuario['Emprestimos'].append({
+            'data': data_obj,
+            'prazo': prazo,
+            'livro': livro
+        })
+
+        print("Livro emprestado com sucesso!")
         return True
 
-    def devolver(self, usuario, livro):
-        if not livro['disponivel'] == False:
-            print("Este livro não foi emprestado")
-        livro['disponivel'] = True
-        usuario['Emprestimo'].remove((date, livro))
+
+    def emprestar(self, usuario, data, livro):
+
+        if not livro['disponivel']:
+            print('Livro já emprestado!')
+            return False
+
+        data_obj = datetime.strptime(data, "%Y-%m-%d")
+        prazo = data_obj + timedelta(days=7)
+
+        livro['disponivel'] = False
+
+        usuario['Emprestimos'].append({
+            'data': data_obj,
+            'prazo': prazo,
+            'livro': livro
+        })
+
+        print("Livro emprestado com sucesso!")
+        return True

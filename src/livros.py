@@ -20,5 +20,13 @@ class Livros():
         self.livros.remove(livro)
 
         print(f'{livro} removido com sucesso!')
+    
+    def buscar_livro(self, titulo):
+
+        for livro in self.livros:
+            if livro['titulo'] == titulo:
+                return livro
+        
+        return None
 
     

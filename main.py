@@ -1,3 +1,5 @@
+import datetime
+
 from src.livros import Livros
 from src.usuarios import Usuarios
 from database.database import dados
@@ -50,38 +52,98 @@ def menu_user():
     if escolha == '1':
         clear()
         print(dados['livros'])
+        input("Pressione [Enter] para continuar...")
+        clear()
     elif escolha == '2':
         clear()
-        print("Digite o nome do livro que deseja emprestar: ")
-        livro = input()
-        users.emprestar(usuario_atual, livro)
+        livro_nome = input("Digite o nome do livro: ")
+        data = input("Digite a data do empréstimo (YYYY-MM-DD): ")
+        livro = livros.buscar_livro(livro_nome)
+
+        if not livro:
+            print("Livro não encontrado")
+            return
+
+        users.emprestar(usuario_atual, data, livro)
         input("Pressione [Enter] para continuar...")
     elif escolha == '3':
         clear()
-        print('Digite seu nome de usuário:')
-        u = input()
+        print("Seus empréstimos:\n")
 
-        for user in dados['usuarios']:
-            if user['nome'] == u:
-                print(user['Emprestimos'])
-        input("Pressione [Enter] para continuar...")
+        hoje = datetime.today()
+
+        for emp in usuario_atual['Emprestimos']:
+            atraso = 0
+
+            if hoje > emp['prazo']:
+                atraso = (hoje - emp['prazo']).days
+
+            multa = atraso * 1
+
+            print(f"{emp['livro']['titulo']}")
+            print(f"Data: {emp['data'].date()}")
+            print(f"Prazo: {emp['prazo'].date()}")
+
+            if multa > 0:
+                print(f"Multa atual: R${multa}")
+            else:
+                print("Sem multa")
+
+            print("-" * 20)
+            input("Pressione [Enter] para continuar...")
+            clear()
+
     elif escolha == '4':
-        users.devolver(usuario_atual, livro)
+        clear()
+        livro_nome = input("Digite o nome do livro: ")
+        livro = livros.buscar_livro(livro_nome)
+
+        if not livro:
+            print("Livro não encontrado")
+            return
+
+        for emp in usuario_atual['Emprestimos']:
+            if emp['livro']['titulo'] == livro_nome:
+                usuario_atual['Emprestimos'].remove(emp)
+                livro['disponivel'] = True
+                print("Livro devolvido com sucesso!")
+                break
+        else:
+            print("Você não tem esse livro emprestado.")
+        
         input("Pressione [Enter] para continuar...")
-    elif escolha == '0':
+
+    elif escolha == '0':    
         clear()
         usuario_atual = None
 
 
 
 while True:
+    clear()
     print("===== MENU INICIAL =====")
     print('\n[1] - Fazer Login')
-    print('\n[2] - Criar Conta')
+    print('[2] - Criar Conta')
     e = input("\nEscolha: ")
 
     if e == '1':
         print('=== Login ===')
         nome_usr = input("Digite seu nome de usuário: ")
         senha = input("Digite sua senha: ")
-        users.logar(nome_usr, senha)
+        usuario_atual = users.logar(nome_usr, senha)
+        input("Pressione [Enter] para continuar...")
+        clear()
+        
+    elif e == '2':
+        print('=== Criar Conta ===')
+        nome_usr = input("Digite seu nome de usuário: ")
+        senha = input("Digite sua senha: ")
+        users.criar_novo(nome_usr, senha)
+        input("Pressione [Enter] para continuar...")
+        clear()
+
+    while usuario_atual:
+        if usuario_atual == 'admin':
+            menu_adm()
+        else:
+            menu_user()
