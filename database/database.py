@@ -5,5 +5,12 @@ dados = {
             'disponivel': True,
         },
     ],
-    'usuarios': [],
+    'usuarios': [
+        {
+            'nome': 'adm',
+            'senha': '1234',
+            'tipo' : 'admin',
+            'Emprestimos' : [],
+        },
+    ],
 }
