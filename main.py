@@ -46,7 +46,7 @@ def menu_adm():
 
     elif escolha == '3':
         clear()
-        livros.listar_livros() #mostrando a lista completa de livros, com os dados importados do vetor
+        livros.listar_livros() #mostrando a lista completa de livros
         input("Pressione [Enter] para continuar...")
         clear()
 
@@ -71,7 +71,7 @@ def menu_user():
 
     if escolha == '1':
         clear()
-        livros.listar_livros() #idêntico ao do menu do admin, mostrando o vetor completo
+        livros.listar_livros() #idêntico ao do menu do admin, mostrando os livros
         input("Pressione [Enter] para continuar...")
         clear()
 
