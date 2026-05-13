@@ -32,7 +32,7 @@ class Livros(): #classe do gerenciamento dos livros
     def listar_livros(self): #função para listar os livros, apenas para o adm, mostrando o título e a disponibilidade
         print("-------Lista de Livros-------")
         for livro in self.livros:
-            print(f"\n{livro['titulo']}")
+            print(f"{livro['titulo']}")
             if livro['disponivel']:
                 print("~Disponível para empréstimo~")
                 print("-------------")
